@@ -50,10 +50,6 @@ Capture Data From the face then train the classifier<br>
 List of all the users<br>
 ![page3](https://i.ibb.co/1KwfVVV/dropdown.png)<br>
 
-### Recognition <br>
-
-
-
 
 <br><br>
 

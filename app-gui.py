@@ -155,7 +155,7 @@ class PageThree(tk.Frame):
 
     def capimg(self):
         self.numimglabel.config(text=str("Captured Images = 0 "))
-        messagebox.showinfo("INSTRUCTIONS", "We will Capture 300 pic of your Face.")
+        messagebox.showinfo("INSTRUCTIONS", "We will Capture 100 pic of your Face.")
         x = start_capture(self.controller.active_name)
         self.controller.num_of_images = x
         self.numimglabel.config(text=str("Number of images captured = "+str(x)))

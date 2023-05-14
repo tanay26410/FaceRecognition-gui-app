@@ -56,7 +56,7 @@ def emotion():
 
     while True:
         ret, img = frame.read()
-        /*img2 = cv2.imread("./data/emojis/sad.png")*/
+        img2 = cv2.imread("./data/emojis/sad.png")
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         face = face_cascade.detectMultiScale(image=gray, scaleFactor=1.3, minNeighbors=5)
 

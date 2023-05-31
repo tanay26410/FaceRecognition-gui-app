@@ -4,10 +4,18 @@ from create_dataset import start_capture
 import tkinter as tk
 from tkinter import font as tkfont
 from tkinter import messagebox,PhotoImage
+from datetime import datetime
+import csv
 #from PIL import ImageTk, Image
 #from gender_prediction import emotion,ageAndgender
 names = set()
-
+def attendance(name):
+    with open('used.csv', 'a', newline='') as file:
+        writer = csv.writer(file)
+        time_now = datetime.now()
+        tStr = time_now.strftime('%H:%M:%S')
+        dStr = time_now.strftime('%d/%m/%Y')
+        writer.writerow([name, tStr, dStr])
 
 class MainUI(tk.Tk):
 
@@ -42,14 +50,20 @@ class MainUI(tk.Tk):
             frame.tkraise()
 
     def on_closing(self):
-
         if messagebox.askokcancel("Quit", "Are you sure?"):
             global names
-            f =  open("nameslist.txt", "a+")
-            for i in names:
-                    f.write(i+" ")
+            with open("nameslist.txt", "w") as f:
+                for i in names:
+                    f.write(i + " ")
+            self.save_used_csv()
             self.destroy()
 
+    def save_used_csv(self):
+        with open('used.csv', 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(['Name', 'Time', 'Date'])
+            for name in names:
+                attendance(name)
 
 class StartPage(tk.Frame):
 
@@ -178,20 +192,20 @@ class PageFour(tk.Frame):
         label = tk.Label(self, text="Face Recognition", font='Helvetica 16 bold')
         label.grid(row=0,column=0, sticky="ew")
         button1 = tk.Button(self, text="Face Recognition", command=self.openwebcam, fg="#ffffff", bg="#263942")
-        #button2 = tk.Button(self, text="Emotion Detection", command=self.emot, fg="#ffffff", bg="#263942")
-        #button3 = tk.Button(self, text="Gender and Age Prediction", command=self.gender_age_pred, fg="#ffffff", bg="#263942")
+        button2 = tk.Button(self, text="Emotion Detection", command=self.emot, fg="#ffffff", bg="#263942")
+        button3 = tk.Button(self, text="Gender and Age Prediction", command=self.gender_age_pred, fg="#ffffff", bg="#263942")
         button4 = tk.Button(self, text="Go to Home Page", command=lambda: self.controller.show_frame("StartPage"), bg="#ffffff", fg="#263942")
         button1.grid(row=1,column=0, sticky="ew", ipadx=5, ipady=4, padx=10, pady=10)
-        #button2.grid(row=1,column=1, sticky="ew", ipadx=5, ipady=4, padx=10, pady=10)
-        #button3.grid(row=2,column=0, sticky="ew", ipadx=5, ipady=4, padx=10, pady=10)
+        button2.grid(row=1,column=1, sticky="ew", ipadx=5, ipady=4, padx=10, pady=10)
+        button3.grid(row=2,column=0, sticky="ew", ipadx=5, ipady=4, padx=10, pady=10)
         button4.grid(row=1,column=1, sticky="ew", ipadx=5, ipady=4, padx=10, pady=10)
 
     def openwebcam(self):
         main_app(self.controller.active_name)
-    #def gender_age_pred(self):
-     #  ageAndgender()
-    #def emot(self):
-     #   emotion()
+    def gender_age_pred(self):
+        ageAndgender()
+    def emot(self):
+        emotion()
 
 
 
